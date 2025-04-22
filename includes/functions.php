@@ -127,7 +127,7 @@ function get_messages(): array
         $where = 'WHERE status = TRUE';
     }
 
-    $stmt = $conn->prepare("SELECT * FROM messages {$where}");
+    $stmt = $conn->prepare("SELECT mg.id, mg.user_id, mg.message, mg.status, TO_CHAR(mg.created_at, 'DD.MM.YYYY HH24:MI') AS format_created_at, users.name FROM messages mg JOIN users ON users.id = mg.user_id {$where}");
     $stmt->execute();
 
     return $stmt->fetchAll();
