@@ -122,7 +122,7 @@ function get_messages(): array
     global $conn;
 
     $where = '';
-    // NOTE:
+
     if (!check_admin()) {
         $where = 'WHERE status = TRUE';
     }
