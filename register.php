@@ -8,6 +8,10 @@ require_once __DIR__ . '/includes/functions.php';
 
 $title = 'Sign Up';
 
+if (check_auth()) {
+    redirect('index.php');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = load(['name', 'email', 'password']);
 
