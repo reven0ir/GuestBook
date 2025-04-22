@@ -29,8 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-<?php
-require_once __DIR__ . '/views/includes/header.tpl.php'; ?>
+<?php require_once __DIR__ . '/views/includes/header.tpl.php'; ?>
 
     <div class="container mt-5">
         <div class="row">
