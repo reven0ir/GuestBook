@@ -29,20 +29,23 @@
 
         </div>
 
-        <form action="" class="mb-2">
 
-            <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-                <label for="floatingTextarea">Comments</label>
-            </div>
+        <?php if (check_auth()): ?>
+            <form action="" method="post" class="mb-2">
 
-            <button type="submit" class="btn btn-primary mt-3">Send</button>
+                <div class="form-floating">
+                    <textarea class="form-control" name="message" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">Comments</label>
+                </div>
 
-        </form>
+                <button type="submit" name="send-message" class="btn btn-primary mt-3">Send</button>
+
+            </form>
 
         <div class="col-12">
             <hr>
         </div>
+        <?php endif; ?>
 
 
     </div>
