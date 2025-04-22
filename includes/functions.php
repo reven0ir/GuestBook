@@ -101,6 +101,22 @@ function login(array $data): bool
     return true;
 }
 
+function save_message(array $data): bool
+{
+    global $conn;
+
+    if (!check_auth()) {
+        $_SESSION['errors'] = 'You must be logged in to send a message';
+        return false;
+    }
+
+    $stmt = $conn->prepare("INSERT INTO messages (user_id, message) VALUES (?, ?)");
+    $stmt->execute([$_SESSION['user']['id'], $data['message']]);
+    $_SESSION['success'] = 'Message successfully sent';
+
+    return true;
+}
+
 function check_auth(): bool
 {
     if (isset($_SESSION['user'])) {
