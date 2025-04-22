@@ -100,3 +100,19 @@ function login(array $data): bool
 
     return true;
 }
+
+function check_auth(): bool
+{
+    if (isset($_SESSION['user'])) {
+        return true;
+    }
+    return false;
+}
+
+function check_admin(): bool
+{
+    if (isset($_SESSION['user']) && $_SESSION['user']['role'] == 2) {
+        return true;
+    }
+    return false;
+}
