@@ -1,8 +1,6 @@
 .idea/
 .vscode/
 
-.gitattributes
-
 vendor/
 
 TODO.md
