@@ -117,6 +117,22 @@ function save_message(array $data): bool
     return true;
 }
 
+function get_messages(): array
+{
+    global $conn;
+
+    $where = '';
+    // NOTE:
+    if (!check_admin()) {
+        $where = 'WHERE status = TRUE';
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM messages {$where}");
+    $stmt->execute();
+
+    return $stmt->fetchAll();
+}
+
 function check_auth(): bool
 {
     if (isset($_SESSION['user'])) {
