@@ -8,6 +8,10 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/vendor/autoload.php';
 
+if (check_auth()) {
+    redirect('index.php');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = load(['email', 'password']);
 
