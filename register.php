@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/functions.php';
@@ -21,9 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ]);
 
     if ($v->validate()) {
-        echo 'Success';
+        if (register($data)) {
+            redirect('auth.php');
+        }
     } else {
-        debug($v->errors());
+        $_SESSION['errors'] = get_errors($v->errors());
     }
 }
 
@@ -34,10 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <strong>Oops...</strong> Seems like error occurred..
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+
+                <?php if (isset($_SESSION['errors'])): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Oops...</strong>
+                        <?php
+                        echo $_SESSION['errors'];
+                        unset($_SESSION['errors']);
+                        ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
 
                 <form method="post">
 
