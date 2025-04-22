@@ -1,3 +1,12 @@
+<?php
+
+if (isset($_GET['do']) && $_GET['do'] == 'logout') {
+    unset($_SESSION['user']);
+    redirect('auth.php');
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -17,21 +26,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="register.php">Sign Up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="auth.php">Sign In</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        Hello, User
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </li>
+
+                <?php if (!check_auth()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="register.php">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="auth.php">Sign In</a>
+                    </li>
+                <?php else: ?>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Hello, <?= $_SESSION['user']['name'] ?>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="?do=logout">Logout</a></li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
