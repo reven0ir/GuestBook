@@ -67,8 +67,8 @@
                         <div class="card mb-3 <?php if (!$message['status']) echo 'border-danger' ?>" id="message-<?= $message['id'] ?>">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
-                                    <h5 class="card-title"><?= $message['user_id'] ?></h5>
-                                    <p class="message-created-at"><?= $message['created_at'] ?></p>
+                                    <h5 class="card-title"><?= $message['name'] ?></h5>
+                                    <p class="message-created-at"><?= $message['format_created_at'] ?></p>
                                 </div>
 
                                 <div class="card-text">
@@ -89,7 +89,7 @@
                                                 <div class="form-floating">
 
                                 <textarea class="form-control" placeholder="Leave a comment here"
-                                          id="message-<?= $message['id'] ?>" style="height: 100px"><?= $message['message']?></textarea>
+                                          id="message-<?= $message['id'] ?>"><?= $message['message'] ?></textarea>
                                                     <label for="message-<?= $message['id'] ?>">Comments</label>
                                                     <button type="submit" class="btn btn-primary mt-3">Save</button>
                                                 </div>
