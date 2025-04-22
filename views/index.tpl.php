@@ -16,14 +16,27 @@
 
         <div class="col-12 mb-4">
 
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Oops...</strong> Seems like error occurred..
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Congratulation!</strong> Great success!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+            <?php if (isset($_SESSION['errors'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Oops...</strong>
+                    <?php
+                    echo $_SESSION['errors'];
+                    unset($_SESSION['errors']);
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulation!</strong>
+                    <?php
+                    echo $_SESSION['success'];
+                    unset($_SESSION['success']);
+                    ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endif; ?>
 
         </div>
 
