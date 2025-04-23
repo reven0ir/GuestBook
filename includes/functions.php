@@ -127,13 +127,28 @@ function get_messages(int $start, int $per_page): array
         $where = 'WHERE status = TRUE';
     }
 
-    $stmt = $conn->prepare("SELECT mg.id, mg.user_id, mg.message, mg.status, TO_CHAR(mg.created_at, 'DD.MM.YYYY HH24:MI') AS format_created_at, users.name FROM messages mg JOIN users ON users.id = mg.user_id {$where} LIMIT :per_page OFFSET :start");
+    $stmt = $conn->prepare("SELECT mg.id, mg.user_id, mg.message, mg.status, TO_CHAR(mg.created_at, 'DD.MM.YYYY HH24:MI') AS format_created_at, users.name FROM messages mg JOIN users ON users.id = mg.user_id {$where} ORDER BY id DESC LIMIT :per_page OFFSET :start");
     $stmt->execute([
         ':per_page' => $per_page,
         ':start' => $start,
     ]);
 
     return $stmt->fetchAll();
+}
+
+function toggle_message_status(int $status, int $id): bool
+{
+    global $conn;
+
+    if (!check_admin()) {
+        $_SESSION['errors'] = 'You must be logged in as an administrator to change the status of a message';
+        return false;
+    }
+
+    $status = $status ? 1 : 0;
+
+    $stmt = $conn->prepare("UPDATE messages SET status = ? WHERE id = ?");
+    return $stmt->execute([$status, $id]);
 }
 
 function get_count_messages(): int
