@@ -117,6 +117,22 @@ function save_message(array $data): bool
     return true;
 }
 
+function edit_message(array $data): bool
+{
+    global $conn;
+
+    if (!check_auth()) {
+        $_SESSION['errors'] = 'You must be logged as administrator to edit a message';
+        return false;
+    }
+
+    $stmt = $conn->prepare("UPDATE messages SET message = ? WHERE id = ?");
+    $stmt->execute([$data['message'], $data['message_id']]);
+    $_SESSION['success'] = 'Message successfully edited';
+
+    return true;
+}
+
 function get_messages(int $start, int $per_page): array
 {
     global $conn;
