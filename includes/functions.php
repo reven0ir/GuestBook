@@ -117,7 +117,7 @@ function save_message(array $data): bool
     return true;
 }
 
-function get_messages(): array
+function get_messages(int $start, int $per_page): array
 {
     global $conn;
 
@@ -127,10 +127,27 @@ function get_messages(): array
         $where = 'WHERE status = TRUE';
     }
 
-    $stmt = $conn->prepare("SELECT mg.id, mg.user_id, mg.message, mg.status, TO_CHAR(mg.created_at, 'DD.MM.YYYY HH24:MI') AS format_created_at, users.name FROM messages mg JOIN users ON users.id = mg.user_id {$where}");
-    $stmt->execute();
+    $stmt = $conn->prepare("SELECT mg.id, mg.user_id, mg.message, mg.status, TO_CHAR(mg.created_at, 'DD.MM.YYYY HH24:MI') AS format_created_at, users.name FROM messages mg JOIN users ON users.id = mg.user_id {$where} LIMIT :per_page OFFSET :start");
+    $stmt->execute([
+        ':per_page' => $per_page,
+        ':start' => $start,
+    ]);
 
     return $stmt->fetchAll();
+}
+
+function get_count_messages(): int
+{
+    global $conn;
+
+    $where = '';
+
+    if (!check_admin()) {
+        $where = 'WHERE status = TRUE';
+    }
+
+    $result = $conn->query("SELECT COUNT(*) FROM messages {$where}");
+    return $result->fetchColumn();
 }
 
 function check_auth(): bool
