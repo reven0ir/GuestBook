@@ -76,12 +76,14 @@ require_once __DIR__ . '/includes/header.tpl.php';
                                     </p>
 
                                     <div class="collapse" id="collapse-<?= $message['id'] ?>">
-                                        <form action="">
+                                        <form method="post" action="">
                                             <div class="form-floating">
-                                                <textarea class="form-control" placeholder="Leave a comment here"
-                                                          id="message-<?= $message['id'] ?>"><?= $message['message'] ?></textarea>
+                                                <textarea name="message" class="form-control" placeholder="Leave a comment here"
+                                                          id="message-<?= $message['id'] ?>" style="height: 200px"><?= $message['message'] ?></textarea>
                                                 <label for="message-<?= $message['id'] ?>">Comments</label>
-                                                <button type="submit" class="btn btn-primary mt-3">Save</button>
+                                                <input type="hidden" name="message_id" value="<?= $message['id'] ?>">
+                                                <input type="hidden" name="page" value="<?= htmlSC($_GET['page'] ?? 1) ?>">
+                                                <button name="edit-message" type="submit" class="btn btn-primary mt-3">Save</button>
                                             </div>
                                         </form>
                                     </div>
