@@ -67,8 +67,11 @@ require_once __DIR__ . '/includes/header.tpl.php';
                             <?php if (check_admin()): ?>
                                 <div class="card-actions mt-2">
                                     <p>
-                                        <a href="#">Disable</a> |
-                                        <a href="#">Approve</a> |
+                                        <?php if ($message['status'] == 1): ?>
+                                            <a href="?page=<?= $page ?>&do=toggle-status&status=0&id=<?= $message['id'] ?>">Disable</a> |
+                                        <?php else: ?>
+                                            <a href="?page=<?= $page ?>&do=toggle-status&status=1&id=<?= $message['id'] ?>">Approve</a> |
+                                        <?php endif; ?>
                                         <a data-bs-toggle="collapse" href="#collapse-<?= $message['id'] ?>">Edit</a>
                                     </p>
 
